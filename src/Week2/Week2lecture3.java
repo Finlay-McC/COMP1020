@@ -1,8 +1,6 @@
 package Week2;
 import java.util.Arrays;
 
-import jdk.swing.interop.SwingInterOpUtils;
-
 /**
  * Week2lecture3
  * <p>
