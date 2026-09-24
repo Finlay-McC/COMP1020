@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Comp1020Parcel
  * <p>
@@ -9,10 +11,80 @@
 public class Comp1020Parcel {
     public static final int YEAR = 2026;
 
+    // ---------- Hubs ----------
+    public static final String[] HUB_CODES = {
+            "WPG", "YYZ", "YVR", "YUL", "JFK", "LAX", "LHR", "NRT"
+    };
+
+    public static final String[] HUB_CITIES = {
+            "Winnipeg", "Toronto", "Vancouver", "Montreal",
+            "New York", "Los Angeles", "London", "Tokyo"
+    };
+
+    public static final String[] HUB_COUNTRIES = {
+            "Canada", "Canada", "Canada", "Canada",
+            "USA", "USA", "UK", "Japan"
+    };
+
+    public static final int[] HUB_FEES = {
+            5, 8, 7, 6, 10, 12, 15, 0
+    };
+
+    // ---------- Shipments ----------
+    public static final String[] SHIPMENT_ORIGINS = {
+            "WPG", "WPG", "WPG", "WPG", "YYZ", "YVR",
+            "YYZ", "JFK", "YUL", "LAX", "WPG", "LHR"
+    };
+
+    public static final String[] SHIPMENT_DESTINATIONS = {
+            "YYZ", "YYZ", "YYZ", "JFK", "WPG", "LAX",
+            "LHR", "LAX", "NRT", "WPG", "YVR", "YYZ"
+    };
+
+    public static final int[] SHIPMENT_PRICES = {
+            40, 35, 35, 90, 45, 110,
+            250, 75, 333, 101, 50, 199
+    };
+
+    // ---------- Customers ----------
+    public static final String[] CUSTOMER_NAMES = {
+            "Alice", "Bob", "Chen", "Dana"
+    };
+
+    public static final String[] CUSTOMER_COUNTRIES = {
+            "Canada", "USA", "Canada", "UK"
+    };
+
+    public static final int[] CUSTOMER_YEARS_JOINED = {
+            2015, 2024, 2021, 2022
+    };
+
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String input;
+        Hub[] hubs = createHubs(HUB_CODES, HUB_CITIES, HUB_COUNTRIES, HUB_FEES);
+        Customer[] customers = new Customer[100];
+        for (int i = 0; i < CUSTOMER_NAMES.length; i++) {
+            customers[i] = new Customer(CUSTOMER_NAMES[i], CUSTOMER_COUNTRIES[i], CUSTOMER_YEARS_JOINED[i]);
+        }
 
+        System.out.println("Enter a customer name: ");
+        input = sc.next();
+        if (input.sEmpty()){
+            exitProgram();
+        }
+        for (Customer customer : customers ) {
+            if (customer.matchesName(input)) {
+                printShipments(customer, createShipments(SHIPMENT_ORIGINS, SHIPMENT_DESTINATIONS, SHIPMENT_PRICES, hubs));
+            }
+        }
 
+        exitProgram();
+    }
+
+    private static void exitProgram() {
         System.out.println("End of processing");
+        System.exit(0);
     }
 
     public static Hub[] createHubs(String[] codes, String[] cities, String[] countries, int[] fees){
@@ -94,7 +166,7 @@ public class Comp1020Parcel {
         for (Shipment shipment : shipments) {
             if (shipment.purchasedBy(customer)) {
                 numShipments++;
-                System.out.printf("Shipment #%d\nOrigin: %s\nDestination: %s\nPrice: $%.2f\nInternational: %s\n\n",
+                System.out.printf("\nShipment #%d Origin: %s Destination: %s Price: $%.2f International: %s\n",
                         numShipments, shipment.getOriginCity(),shipment.getDestinationCity(),(double)shipment.getFinalPrice(),
                         shipment.isInternational());
             }
