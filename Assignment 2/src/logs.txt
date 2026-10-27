@@ -1,0 +1,4 @@
+weather | 2024 | Assignment 2/src/weather.txt
+equipment | 2025 | Assignment 2/src/equipment.txt
+broken | 2030 | broken.txt
+missing | 2023 | missing.txt

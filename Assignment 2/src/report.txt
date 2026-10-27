@@ -1,0 +1,8 @@
+Name: weather
+Year: 2024
+Lines: 3
+Words: 15
+Unique Words: 13
+Longest Word: temperature
+Note: Hello
+
